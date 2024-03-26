@@ -5,6 +5,8 @@ namespace GalleryAPI.Interfaces;
 
 public interface IAzureBlobService
 {
-    Task<String> UploadFilesAsync(IFormFile file, string email);
+    Task<String> UploadFilesAsync(IFormFile file);
     Task<Response<BlobInfo>> SetMetadataAsync(string fileName, string email);
+
+    
 }

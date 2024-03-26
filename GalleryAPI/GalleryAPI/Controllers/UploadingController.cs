@@ -15,9 +15,9 @@ public class UploadingController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> UploadFile(IFormFile file, [FromForm] string email)
+    public async Task<IActionResult> UploadFile(IFormFile file)
     {
-        var response = await _service.UploadFilesAsync(file, email);
+        var response = await _service.UploadFilesAsync(file);
         return Ok(response);
     }
 }
