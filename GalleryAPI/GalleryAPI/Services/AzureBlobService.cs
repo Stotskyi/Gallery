@@ -30,8 +30,7 @@ public class AzureBlobService :  IAzureBlobService
         var streamContent = file.OpenReadStream();
        
         var responseFromUploading = await _containerClient.UploadBlobAsync(fileName, streamContent, default);
-
-      //  await SetMetadataAsync(fileName, "userid");
+        
         await _imageContext.SaveImageAsync(client.Uri.ToString(), id);
        
         return client.Uri.ToString();
