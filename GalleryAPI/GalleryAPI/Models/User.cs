@@ -1,10 +1,15 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Identity.Client;
+
 namespace GalleryAPI.Models;
 
-public class User
+[Table(nameof(User))]
+public class User : IdentityUser<int>
 {
-    public string Id { get; set; }
-    public string Name { get; set; }
+    public int AccountId { get; set; }
     
-    public ICollection<Album> Albums { get; set; }
-    public ICollection<Image> Images { get; set; }
+    [ForeignKey(nameof(AccountId))]
+    public Account Account { get; set; }
+   
 }
