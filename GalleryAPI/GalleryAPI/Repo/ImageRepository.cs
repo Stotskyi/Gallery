@@ -6,20 +6,21 @@ namespace GalleryAPI.Repo;
 
 public class ImageRepository(ApplicationContext dbContext) : IImageRepository
 {
-    public List<ImageDto> GetAllImagesAsync(int userId)
+    public async Task<List<Image>> GetAllImagesAsync(int userId)
     {
         var images =  dbContext.Images.Where(i => i.AccountId == userId).ToList();
 
-        var dto = new List<ImageDto>();
+        var dto = new List<Image>();
         foreach (var i in images)
         {
-            dto.Add(new ImageDto
+            dto.Add(new Image
             {
                 Uri = i.Uri
             });
         }
 
-        return dto;
+        return await Task.FromResult(dto);
+
     }
 
     public async Task SaveImageAsync(string uri, int id)

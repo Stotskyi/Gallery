@@ -82,7 +82,6 @@ builder.Services.AddAzureClients(clientBuilder =>
 });
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
-builder.Services.AddAntiforgery();
 
 var app = builder.Build();
 
@@ -95,8 +94,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseAntiforgery();
-//app.MapControllers();
+app.UseCors(options =>
+{
+    options.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+});
 
 app.MapPost("sign-up", ([FromServices] IUserService userService,
     [FromBody] SignUpModel model) => userService.RegisterUserAsync(model));
@@ -104,14 +105,14 @@ app.MapPost("sign-up", ([FromServices] IUserService userService,
 app.MapPost("sign-in", ([FromServices] IUserService userService,
     [FromBody] SignInModel model) => userService.LoginUserAsync(model));
 
-app.MapGet("me", ([FromServices] IHttpContextAccessor accessor, IImageRepository _imageContext) =>
+app.MapGet("file", async ([FromServices] IHttpContextAccessor accessor, IImageRepository _imageContext) =>
 {
     var id =  accessor.HttpContext?.User.Claims
         .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)? 
         .Value;
    
      Int32.TryParse(id, out int res);
-     var users =  _imageContext.GetAllImagesAsync(res);
+     var users =  await _imageContext.GetAllImagesAsync(res);
 
      List<string> images = null;
      foreach (var u in users)
@@ -123,7 +124,7 @@ app.MapGet("me", ([FromServices] IHttpContextAccessor accessor, IImageRepository
 
 }).RequireAuthorization();
 
-app.MapPost("upload-file", async ([FromServices] IHttpContextAccessor accessor, IAzureBlobService _azureBlobService,  IFormFile file) =>
+app.MapPost("file", async ([FromServices] IHttpContextAccessor accessor, IAzureBlobService _azureBlobService,  IFormFile file) =>
     {
         var id = accessor.HttpContext?.User.Claims
             .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?
