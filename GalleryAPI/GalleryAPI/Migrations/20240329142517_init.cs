@@ -4,6 +4,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace GalleryAPI.Migrations
 {
     /// <inheritdoc />
@@ -224,6 +226,25 @@ namespace GalleryAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Accounts",
+                columns: new[] { "Id", "CreatedAt", "Name" },
+                values: new object[] { 3, new DateTime(2024, 3, 29, 14, 25, 15, 353, DateTimeKind.Utc).AddTicks(7338), "stokovyi" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { 1, null, "Owner", "OWNER" },
+                    { 2, null, "Admin", "ADMIN" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "AccountId", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { 3, 0, 3, "b6bb6db4-f0f5-46a8-a5a5-b1a1ae13374b", "andrii.stotskyi.u@gmail.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEL+wm5BtfyqRdcz+yWkits186BNia59WtZFlknuMv+tIjOiPrstCzQI5EKwFBHOLDg==", null, false, null, false, "stokovyi" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Albums_AccountId",

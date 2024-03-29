@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Azure.Identity;
 using GalleryAPI.Db;
+using GalleryAPI.Db.Model;
 using GalleryAPI.DTO;
 using GalleryAPI.Interfaces;
 using GalleryAPI.Models;
@@ -19,7 +20,6 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -30,12 +30,18 @@ builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAzureBlobService,AzureBlobService>();
+
 builder.Services.AddDbContext<ApplicationContext>(opts =>
 {
     opts.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
+    opts.EnableSensitiveDataLogging();
 });
 builder.Services.AddIdentity<User, IdentityRole<int>>(opts => opts.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationContext>();
+    .AddRoles<IdentityRole<int>>()
+    .AddTokenProvider<DataProtectorTokenProvider<User>>("GalleryAPI")
+    .AddEntityFrameworkStores<ApplicationContext>()
+    .AddDefaultTokenProviders();
+
 builder.Services.Configure<IdentityOptions>(opts =>
 {
     opts.Password.RequireDigit = true;
@@ -63,6 +69,7 @@ builder.Services.AddAuthentication(options =>
 {
     o.TokenValidationParameters = new TokenValidationParameters
     {
+        AuthenticationType = "Jwt",
         ValidIssuer = builder.Configuration["JwtOptions:Issuer"],
         ValidAudience = builder.Configuration["JwtOptions:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey
@@ -82,6 +89,8 @@ builder.Services.AddAzureClients(clientBuilder =>
 });
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
+builder.Services.Configure<OwnerOptions>(builder.Configuration.GetSection(nameof(OwnerOptions)));
+
 
 var app = builder.Build();
 
@@ -112,19 +121,20 @@ app.MapGet("file", async ([FromServices] IHttpContextAccessor accessor, IImageRe
         .Value;
    
      Int32.TryParse(id, out int res);
-     var users =  await _imageContext.GetAllImagesAsync(res);
+     var images = _imageContext.GetAllImagesAsync(res).Result;
 
-     List<string> images = null;
-     foreach (var u in users)
+     List<string> references = new List<string>();
+     foreach (var i in images)
      {
-         images.Add(u.Uri);
+         references.Add((i.Uri));
      }
 
-     return images; 
+     return references;
 
-}).RequireAuthorization();
 
-app.MapPost("file", async ([FromServices] IHttpContextAccessor accessor, IAzureBlobService _azureBlobService,  IFormFile file) =>
+});
+
+app.MapPost("file", async  ([FromServices] IHttpContextAccessor accessor, IAzureBlobService _azureBlobService,  IFormFile file) =>
     {
         var id = accessor.HttpContext?.User.Claims
             .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?
@@ -133,4 +143,6 @@ app.MapPost("file", async ([FromServices] IHttpContextAccessor accessor, IAzureB
       var uri =  await  _azureBlobService.UploadFilesAsync(file, res);
       return uri;
     }).RequireAuthorization().DisableAntiforgery();
+
+
 app.Run();

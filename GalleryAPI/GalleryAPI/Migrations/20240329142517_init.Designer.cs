@@ -3,6 +3,7 @@ using System;
 using GalleryAPI.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GalleryAPI.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240329142517_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +48,7 @@ namespace GalleryAPI.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 3, 29, 14, 46, 1, 363, DateTimeKind.Utc).AddTicks(26),
+                            CreatedAt = new DateTime(2024, 3, 29, 14, 25, 15, 353, DateTimeKind.Utc).AddTicks(7338),
                             Name = "stokovyi"
                         });
                 });
@@ -172,13 +175,11 @@ namespace GalleryAPI.Migrations
                             Id = 3,
                             AccessFailedCount = 0,
                             AccountId = 3,
-                            ConcurrencyStamp = "70f3005c-d645-4d5b-b0d4-34f97238f60f",
+                            ConcurrencyStamp = "b6bb6db4-f0f5-46a8-a5a5-b1a1ae13374b",
                             Email = "andrii.stotskyi.u@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedEmail = "ANDRII.STOTSKYI.U@GMAIL.COM",
-                            NormalizedUserName = "STOKOVYI",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBWVjqLWDLWIjQHsRYEEyUZ/W0kjbCPCwlcJzFh5Ms6DF+DcrmRxb8tfqZkT2FHSGw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL+wm5BtfyqRdcz+yWkits186BNia59WtZFlknuMv+tIjOiPrstCzQI5EKwFBHOLDg==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "stokovyi"
@@ -217,14 +218,12 @@ namespace GalleryAPI.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "1",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -312,13 +311,6 @@ namespace GalleryAPI.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = 3,
-                            RoleId = 1
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>

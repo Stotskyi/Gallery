@@ -6,18 +6,14 @@ namespace GalleryAPI.Repo;
 
 public class ImageRepository(ApplicationContext dbContext) : IImageRepository
 {
-    public async Task<List<Image>> GetAllImagesAsync(int userId)
+    public  async Task<List<Image>> GetAllImagesAsync(int userId)
     {
         var images =  dbContext.Images.Where(i => i.AccountId == userId).ToList();
 
-        var dto = new List<Image>();
-        foreach (var i in images)
+        var dto = images.Select(i => new Image
         {
-            dto.Add(new Image
-            {
-                Uri = i.Uri
-            });
-        }
+            Uri = i.Uri
+        }).ToList();
 
         return await Task.FromResult(dto);
 

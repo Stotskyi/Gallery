@@ -25,16 +25,25 @@ public class UserService(UserManager<User> userManager, IJwtService jwtService,I
 
         var result = await userManager.CreateAsync(user, model.Password);
 
-        if (!result.Succeeded)
+        if (result.Succeeded)
+        {
+            result = await userManager.AddToRoleAsync(user, "Admin");
+            if (result.Succeeded)
+            {
+                var roles = await userManager.GetRolesAsync(user);
+                return new AuthModel
+                {
+                    AccessToken = jwtService.GenerateJwt(user.Id, user.UserName,roles.ToList())
+                };
+            }
+        }
+        else
         {
             throw new SignUpFailedException(
                 string.Join(",", result.Errors.Select(x => x.Description)));
         }
-
-        return new AuthModel
-        {
-            AccessToken = jwtService.GenerateJwt(user.Id, user.UserName)
-        };
+        
+        return null;
     }
 
     public async Task<AuthModel> LoginUserAsync(SignInModel model)
@@ -48,10 +57,13 @@ public class UserService(UserManager<User> userManager, IJwtService jwtService,I
         {
             throw new SignInFailedException("Password is not valid");
         }
+
+        var roles = await userManager.GetRolesAsync(user);
         
         return new AuthModel
         {
-            AccessToken = jwtService.GenerateJwt(user.Id, user.UserName!)
+            Roles = roles.ToList(),
+            AccessToken = jwtService.GenerateJwt(user.Id, user.UserName!,roles.ToList())
         };
         
     }

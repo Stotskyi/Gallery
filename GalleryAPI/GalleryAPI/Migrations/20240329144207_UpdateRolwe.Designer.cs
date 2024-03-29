@@ -3,6 +3,7 @@ using System;
 using GalleryAPI.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GalleryAPI.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240329144207_UpdateRolwe")]
+    partial class UpdateRolwe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +48,7 @@ namespace GalleryAPI.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 3, 29, 14, 46, 1, 363, DateTimeKind.Utc).AddTicks(26),
+                            CreatedAt = new DateTime(2024, 3, 29, 14, 42, 6, 64, DateTimeKind.Utc).AddTicks(9302),
                             Name = "stokovyi"
                         });
                 });
@@ -172,13 +175,11 @@ namespace GalleryAPI.Migrations
                             Id = 3,
                             AccessFailedCount = 0,
                             AccountId = 3,
-                            ConcurrencyStamp = "70f3005c-d645-4d5b-b0d4-34f97238f60f",
+                            ConcurrencyStamp = "dd2bb4aa-168b-4989-896b-4bc307e36e43",
                             Email = "andrii.stotskyi.u@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            NormalizedEmail = "ANDRII.STOTSKYI.U@GMAIL.COM",
-                            NormalizedUserName = "STOKOVYI",
-                            PasswordHash = "AQAAAAIAAYagAAAAEBWVjqLWDLWIjQHsRYEEyUZ/W0kjbCPCwlcJzFh5Ms6DF+DcrmRxb8tfqZkT2FHSGw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAjSwgt+QsOwV7Z6BSuTMwCbK4tZJcnDZvc56bWE/uzRo8eYE2n5aD4aMblNgIFL+g==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "stokovyi"

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GalleryAPI.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240327171304_init")]
-    partial class init
+    [Migration("20240329144602_UpdateRol2")]
+    partial class UpdateRol2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,6 +43,14 @@ namespace GalleryAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2024, 3, 29, 14, 46, 1, 363, DateTimeKind.Utc).AddTicks(26),
+                            Name = "stokovyi"
+                        });
                 });
 
             modelBuilder.Entity("GalleryAPI.Models.Album", b =>
@@ -160,6 +168,24 @@ namespace GalleryAPI.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            AccessFailedCount = 0,
+                            AccountId = 3,
+                            ConcurrencyStamp = "70f3005c-d645-4d5b-b0d4-34f97238f60f",
+                            Email = "andrii.stotskyi.u@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ANDRII.STOTSKYI.U@GMAIL.COM",
+                            NormalizedUserName = "STOKOVYI",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBWVjqLWDLWIjQHsRYEEyUZ/W0kjbCPCwlcJzFh5Ms6DF+DcrmRxb8tfqZkT2FHSGw==",
+                            PhoneNumberConfirmed = false,
+                            TwoFactorEnabled = false,
+                            UserName = "stokovyi"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
@@ -189,6 +215,22 @@ namespace GalleryAPI.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConcurrencyStamp = "1",
+                            Name = "Owner",
+                            NormalizedName = "OWNER"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConcurrencyStamp = "2",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -273,6 +315,13 @@ namespace GalleryAPI.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 3,
+                            RoleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
