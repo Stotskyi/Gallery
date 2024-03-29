@@ -128,21 +128,20 @@ app.MapGet("file", async ([FromServices] IHttpContextAccessor accessor, IImageRe
      {
          references.Add((i.Uri));
      }
-
      return references;
-
-
+    
 });
 
-app.MapPost("file", async  ([FromServices] IHttpContextAccessor accessor, IAzureBlobService _azureBlobService,  IFormFile file) =>
+app.MapPost("file",
+    async ([FromServices] IHttpContextAccessor accessor, IAzureBlobService _azureBlobService, IFormFile file) =>
     {
         var id = accessor.HttpContext?.User.Claims
             .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?
             .Value;
         Int32.TryParse(id, out int res);
-      var uri =  await  _azureBlobService.UploadFilesAsync(file, res);
-      return uri;
-    }).RequireAuthorization().DisableAntiforgery();
+        var uri = await _azureBlobService.UploadFilesAsync(file, res);
+        return uri;
+    }).RequireAuthorization();
 
 
 app.Run();
