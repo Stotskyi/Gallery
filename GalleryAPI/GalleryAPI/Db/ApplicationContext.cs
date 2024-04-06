@@ -25,6 +25,7 @@ public class ApplicationContext : IdentityDbContext<User,IdentityRole<int>, int>
     {
         const int ownerRoleId = 1;
         const int adminRoleId = 2;
+        const int userRoleId = 3;
 
         base.OnModelCreating(builder);
         var roles = new List<IdentityRole<int>>
@@ -42,8 +43,14 @@ public class ApplicationContext : IdentityDbContext<User,IdentityRole<int>, int>
             Name = "Admin",
             NormalizedName = "Admin".ToUpper(),
             ConcurrencyStamp = adminRoleId.ToString()
-
-         }
+             },
+            new IdentityRole<int>()
+            {
+                Id = userRoleId,
+                Name = "User",
+                NormalizedName = "User".ToUpper(),
+                ConcurrencyStamp = userRoleId.ToString()
+            }
         };
 
         builder.Entity<IdentityRole<int>>().HasData(roles);

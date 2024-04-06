@@ -25,12 +25,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddAuthorization();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAzureBlobService,AzureBlobService>();
-
+builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddDbContext<ApplicationContext>(opts =>
 {
     opts.UseNpgsql(builder.Configuration.GetConnectionString("Default"));
@@ -80,6 +79,12 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true
     };
 });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Owner", policy => policy.RequireRole("Owner"));
+    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("User", policy => policy.RequireRole("User"));
+});
 
 builder.Services.AddAzureClients(clientBuilder =>
 {
@@ -114,14 +119,14 @@ app.MapPost("sign-up", ([FromServices] IUserService userService,
 app.MapPost("sign-in", ([FromServices] IUserService userService,
     [FromBody] SignInModel model) => userService.LoginUserAsync(model));
 
-app.MapGet("file", async ([FromServices] IHttpContextAccessor accessor, IImageRepository _imageContext) =>
+app.MapGet("file", async ([FromServices] IHttpContextAccessor accessor, IImageService _imageService) =>
 {
     var id =  accessor.HttpContext?.User.Claims
         .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)? 
         .Value;
    
      Int32.TryParse(id, out int res);
-     var images = _imageContext.GetAllImagesAsync(res).Result;
+     var images = _imageService.GetAllImagesAsync(res).Result;
 
      List<string> references = new List<string>();
      foreach (var i in images)
@@ -130,7 +135,7 @@ app.MapGet("file", async ([FromServices] IHttpContextAccessor accessor, IImageRe
      }
      return references;
     
-});
+}).RequireAuthorization("User");
 
 app.MapPost("file",
     async ([FromServices] IHttpContextAccessor accessor, IAzureBlobService _azureBlobService, IFormFile file) =>
@@ -141,7 +146,7 @@ app.MapPost("file",
         Int32.TryParse(id, out int res);
         var uri = await _azureBlobService.UploadFilesAsync(file, res);
         return uri;
-    }).RequireAuthorization();
+    }).RequireAuthorization("User").DisableAntiforgery();
 
 
 app.Run();

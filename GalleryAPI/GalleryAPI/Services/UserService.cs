@@ -27,12 +27,13 @@ public class UserService(UserManager<User> userManager, IJwtService jwtService,I
 
         if (result.Succeeded)
         {
-            result = await userManager.AddToRoleAsync(user, "Admin");
+            result = await userManager.AddToRoleAsync(user, "User");
             if (result.Succeeded)
             {
                 var roles = await userManager.GetRolesAsync(user);
                 return new AuthModel
                 {
+                    Roles = roles.ToList(),
                     AccessToken = jwtService.GenerateJwt(user.Id, user.UserName,roles.ToList())
                 };
             }
