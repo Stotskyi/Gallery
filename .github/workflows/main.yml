@@ -26,5 +26,3 @@ jobs:
 
       - name: Publish 
         run: dotnet ./GalleryAPI.sln --configuration Release --no-build 
-
-  s
