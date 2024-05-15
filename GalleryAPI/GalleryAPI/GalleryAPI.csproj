@@ -5,22 +5,38 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
+        <RootNamespace>GalleryAPI</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Azure.Identity" Version="1.10.4" />
         <PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.3" />
-        <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Azure" Version="1.7.1" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Azure" Version="1.7.1" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="appsettings.Development.json" />
+      <None Include="appsettings.json" />
+      <None Include="appsettings.Production.json" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\GalleryAPI.BLL\GalleryAPI.BLL.csproj" />
+      <ProjectReference Include="..\GalleryAPI.Core\GalleryAPI.Core.csproj" />
+      <ProjectReference Include="..\GalleryAPI.DAL\GalleryAPI.DAL.csproj" />
     </ItemGroup>
 
 </Project>
