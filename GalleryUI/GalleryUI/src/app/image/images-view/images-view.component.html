@@ -1,0 +1,7 @@
+<div class="photo-container">
+<div class="photo" *ngFor="let image of images">
+    <app-image-view [image]="image.uri"></app-image-view>
+  </div>
+  </div>
+  
+  <app-image-modal *ngIf="modalImage" [imageUrl]="modalImage" (close)="closeModal()"></app-image-modal>

@@ -1,0 +1,15 @@
+.photo-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  
+  .photo {
+    margin-right: 10px; /* Adjust margin as needed */
+  }
+  
+  .photo img {
+    max-width: 100%;
+    height: auto;
+  }
+  
