@@ -26,6 +26,8 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAzureBlobService,AzureBlobService>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IAlbumService, AlbumService>();
+builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 
 builder.Services.AddDbContext<ApplicationContext>(opts =>
 {
