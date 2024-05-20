@@ -7,7 +7,7 @@ using GalleryAPI.DAL.Models;
 using GalleryAPI.DAL.Options;
 using GalleryAPI.DAL.Repository;
 using GalleryAPI.DAL.Repository.Interfaces;
-using GalleryAPI.Services;
+using GalleryAPI.Infrastructure.Profiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -20,12 +20,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddAutoMapper(typeof(ImageProfile));
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAzureBlobService,AzureBlobService>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IAlbumService, AlbumService>();
+builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 
 builder.Services.AddDbContext<ApplicationContext>(opts =>
 {

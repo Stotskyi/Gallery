@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+header {
+  display: flex;
+  height: 100%;
+  background: #e9ecff;
+}
+
+nav {
+  position: fixed;
+  width: 200px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #432fbf;
+  padding-top: 20px;
+  box-shadow: 2px 0 10px rgba(67, 47, 191, 0.5);
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+li {
+  width: 100%;
+}
+
+a {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  width: 100%;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+a.active,
+a:hover {
+  background: #5e4ecb;
+}
+
+svg {
+  stroke: #9386ea;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  transition: stroke 0.3s ease, transform 0.3s ease;
+}
+
+a.active svg,
+a:hover svg {
+  stroke: #fff;
+}
+
+.link-text {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  user-select: none;
+}
+
+.link-background {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #5e4ecb;
+  border-radius: 0 10px 10px 0;
+  z-index: 0;
+  transition: transform 0.3s cubic-bezier(0.7, 0, 0.38, 0.86);
+}
+
+main {
+  margin-left: 200px; /* Adjust according to the width of the nav */
+  padding: 20px;
+}

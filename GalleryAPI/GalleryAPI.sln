@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalleryAPI.DAL", "GalleryAP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalleryAPI.BLL", "GalleryAPI.BLL\GalleryAPI.BLL.csproj", "{30EF8F24-6EE7-4A7B-9AB7-C82A08EB4A97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalleryAPI.Infrastructure", "GalleryAPI.Infrastructure\GalleryAPI.Infrastructure.csproj", "{7863F150-24BC-481D-A60A-854C6CA75708}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{30EF8F24-6EE7-4A7B-9AB7-C82A08EB4A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30EF8F24-6EE7-4A7B-9AB7-C82A08EB4A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30EF8F24-6EE7-4A7B-9AB7-C82A08EB4A97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7863F150-24BC-481D-A60A-854C6CA75708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7863F150-24BC-481D-A60A-854C6CA75708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7863F150-24BC-481D-A60A-854C6CA75708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7863F150-24BC-481D-A60A-854C6CA75708}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

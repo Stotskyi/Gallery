@@ -1,0 +1,8 @@
+.photo {
+    margin: 10px;
+    display: inline-block;
+  }
+  .photo img {
+    width: 200px;
+    height: auto;
+  }

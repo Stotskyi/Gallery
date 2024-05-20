@@ -29,7 +29,7 @@ export class RegistrationComponent {
       next: (response) =>{
          this.cookieService.set('Authorization',`Bearer ${response.accessToken}`,
         undefined,'/',undefined,true,'Strict');
-
+        console.log(response.accessToken)
         this.router.navigateByUrl('/');
       }
     })

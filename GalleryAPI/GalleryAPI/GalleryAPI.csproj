@@ -37,6 +37,7 @@
       <ProjectReference Include="..\GalleryAPI.BLL\GalleryAPI.BLL.csproj" />
       <ProjectReference Include="..\GalleryAPI.Core\GalleryAPI.Core.csproj" />
       <ProjectReference Include="..\GalleryAPI.DAL\GalleryAPI.DAL.csproj" />
+      <ProjectReference Include="..\GalleryAPI.Infrastructure\GalleryAPI.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
